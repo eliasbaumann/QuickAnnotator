@@ -30,7 +30,7 @@ import sys
 
 headers = {'Content-Type': 'application/json'}
 
-parser = argparse.ArgumentParser(description='Import existing images with annotations into quick annotator. Note: Masks are expected to be in a subdirectory called "masks" ')
+parser = argparse.ArgumentParser(description='Import existing images with annotations into quick annotator. Note: Masks are expected to be in a subdirectory called "mask" ')
 parser.add_argument('-s', '--server', help="host with port, default http://localhost:5555", default="http://localhost:5555", type=str)
 parser.add_argument('-n', '--projname', help="project to create/add to", required=True, type=str)
 parser.add_argument('-p', '--patchsize', help="Patchsize, default 256", default=256, type=int)
@@ -52,7 +52,7 @@ patch_size = args.patchsize
 train_percent = args.trainpercent
 stride = args.stride
 
-img_fname = []
+img_fnames = []
 
 test1 = args.input_pattern
 if len(args.input_pattern) > 1:  # bash has sent us a list of files
@@ -129,7 +129,7 @@ for img_fname in img_fnames:
     
     # load mask
     img_fname_base = os.path.basename(img_fname)
-    mask_fname = f'{os.path.dirname(img_fname)}{os.sep}masks{os.sep}{img_fname_base.replace(".png","_mask.png")}'#nuclei 
+    mask_fname = f'{os.path.dirname(img_fname)}{os.sep}mask{os.sep}{img_fname_base.replace(".png","_mask.png")}'#nuclei 
     mask=cv2.imread(mask_fname)
     
     if mask is None:
